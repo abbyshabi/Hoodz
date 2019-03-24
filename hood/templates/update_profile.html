@@ -1,0 +1,66 @@
+
+{% block content %}
+{% load crispy_forms_tags %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="shortcut icon" href="/static/images/trophy.png" type="image/x-icon">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Key Login Form a Responsive Web Template, Bootstrap Web Templates, Flat Web Templates, Android Compatible Web Template, Smartphone Compatible Web Template, Free Webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design">
+   
+    <link rel="stylesheet" href="/static/css/css/style.css" type="text/css" media="all">
+    <link rel="stylesheet" type="text/css" href="/static/css/css/main.css">
+  
+</head>
+
+<body>
+        <h1 class="w3-center" style="padding-top:35px;"> <i></h1>
+<section class="main">
+<div class="container-login100" style="background-image:url('/static/images/bg-01.jpg')">
+	<div class="wrap-login100">
+            <span class="login100-form-title p-b-34 p-t-27">
+                  Update Profile
+                </span>      
+
+    <form  action ="{%url 'update'%}" method="post" enctype="multipart/form-data">
+         {% csrf_token %}
+            {{ form|crispy }}
+            <div class="container-login100-form-btn">
+                    <button class="login100-form-btn">
+                       Post
+                    </button>
+                    <button class="login100-form-btn" style="margin-left:20px;">
+                        <a href="/"> Back </a>
+                     </button>
+            </div>
+        </form>
+			</div>
+		</div>
+		<div class="bottom-grid1">
+			
+			<div class="copyright">
+			
+				</p>
+			</div>
+		</div>
+    </div>
+</section>
+
+</body>
+<!-- //Body -->
+</html>
+<script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+{% endblock %}
