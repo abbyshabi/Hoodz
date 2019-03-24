@@ -74,4 +74,30 @@ class Profile(models.Model):
 
     def get_absolute_url(self): 
         return reverse('user_profile')
-       
+
+class Business(models.Model):
+    about = models.TextField(max_length=100)
+    name = models.TextField(max_length=15)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='business')
+    neighbourhood = models.ForeignKey(Project,on_delete = models.CASCADE)
+
+    def save_profile(self):
+        self.save()
+
+      
+    @classmethod
+    def get_by_id(cls, id):
+        business = Business.objects.get(id = id)
+        return profile
+
+    
+    def get_absolute_url(self): 
+        return reverse('business')
+
+    def __str__(self):
+        return self.name
+
+    @classmethod
+    def get_business(cls, id):
+        business = Business.objects.filter(neighbourhood__pk =id)
+        return business
