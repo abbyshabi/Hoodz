@@ -54,4 +54,13 @@ class Project(models.Model):
    def __str__(self):
         return self.name
 
-  
+class Profile(models.Model):
+    profile_image = models.ImageField(blank=True,upload_to='profiles/')
+    bio = models.TextField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    neighbour_hood = models.ForeignKey(Project,on_delete = models.CASCADE)
+
+    def save_profile(self):
+        self.save()
+
+      
