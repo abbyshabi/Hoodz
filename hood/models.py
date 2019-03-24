@@ -134,3 +134,34 @@ class Post(models.Model):
     def get_post(cls, id):
         posts = Post.objects.filter(post_neighbourhood__pk =id)
         return posts
+    
+class Location(models.Model):
+   """
+   This is the class where we will create locations
+   """
+   name = models.CharField(max_length = 30)
+   neighbourhood = models.ForeignKey(Neighbourhood , on_delete= models.CASCADE)
+
+   def save_location(self):
+       """
+       This is the function that we will use to save the instance of this class
+       """
+       self.save()
+
+   
+   def __str__(self):
+       return self.name
+
+class Category(models.Model):
+   """
+   This is the class where we will create categories
+   """
+   name = models.CharField(max_length = 30)
+   neighbourhood = models.ForeignKey(Neighbourhood , on_delete= models.CASCADE)
+   
+   def save_category(self):
+       """
+       This is the function that we will use to save the instance of this class
+       """
+       self.save()
+
