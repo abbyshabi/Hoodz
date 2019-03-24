@@ -16,3 +16,24 @@ def index(request):
     return render(request,'index.html',{"business":business,"profile":profile,"projects":projects})
 
 
+@login_required(login_url='/accounts/login/')
+def new_project(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = ProjectForm(request.POST,request.FILES)
+        if form.is_valid():
+            project = form.save(commit=False)
+            project.admin = current_user
+            project.save()
+        return redirect('home')
+    else:
+        form = ProjectForm()
+    return render(request,'new_project.html',{'form':form})
+
+
+@login_required(login_url='/accounts/login/')
+def profile(request):
+    user = request.user
+    #profile = Profile.objects.get(user_id=current_user.id)
+    
+    return render(request, 'profile.html',{"user":user, "current_user":request.user})
