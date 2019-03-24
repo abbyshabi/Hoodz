@@ -7,4 +7,10 @@ from .models import Profile,Business,Project,Post
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-      
+
+class BusinessForm(forms.ModelForm):
+    class Meta:
+        model = Business
+        exclude = ['owner']
+
+     
