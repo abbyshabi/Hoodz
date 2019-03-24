@@ -52,3 +52,18 @@ def update_profile(request):
         form = ProfileForm()
     
     return render(request,'update_profile.html',{"form":form})
+
+@login_required(login_url='/accounts/login/')
+def new_hood(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NeighbourhoodForm(request.POST,request.FILES)
+        if form.is_valid():
+            neighbourhood = form.save(commit=False)
+            neighbourhood.hood_admin= current_user
+            neighbourhood.save()
+        return redirect('home')
+    else:
+        form = NeighbourhoodForm()
+    
+    return render(request,'new_hood.html',{"form":form})
