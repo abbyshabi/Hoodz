@@ -17,4 +17,9 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         exclude=['admin']
-     
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        exclude=['poster']
+            
