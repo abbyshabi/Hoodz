@@ -5,3 +5,14 @@ from .models import Business,Profile,Project,Post
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 
+# Create your views here.
+def index(request):
+    current_user = request.user
+    
+    projects = Project.objects.order_by('-date')
+    business = Business.objects.all()
+    profile = Profile.objects.order_by('-last_update')
+
+    return render(request,'index.html',{"business":business,"profile":profile,"projects":projects})
+
+
