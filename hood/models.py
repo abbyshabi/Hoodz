@@ -135,12 +135,12 @@ class Post(models.Model):
         posts = Post.objects.filter(post_neighbourhood__pk =id)
         return posts
     
-class Location(models.Model):
+class Locations(models.Model):
    """
    This is the class where we will create locations
    """
    name = models.CharField(max_length = 30)
-   neighbourhood = models.ForeignKey(Neighbourhood , on_delete= models.CASCADE)
+   loc_neighbourhood = models.ForeignKey(Neighbourhood , on_delete= models.CASCADE)
 
    def save_location(self):
        """
@@ -157,7 +157,7 @@ class Category(models.Model):
    This is the class where we will create categories
    """
    name = models.CharField(max_length = 30)
-   neighbourhood = models.ForeignKey(Neighbourhood , on_delete= models.CASCADE)
+   cat_neighbourhood = models.ForeignKey(Neighbourhood , on_delete= models.CASCADE)
    
    def save_category(self):
        """
