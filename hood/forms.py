@@ -13,4 +13,8 @@ class BusinessForm(forms.ModelForm):
         model = Business
         exclude = ['owner']
 
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        exclude=['admin']
      
