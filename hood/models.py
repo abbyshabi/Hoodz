@@ -101,3 +101,36 @@ class Business(models.Model):
     def get_business(cls, id):
         business = Business.objects.filter(neighbourhood__pk =id)
         return business
+
+    @classmethod
+    def search_business(cls,name):
+        business = Business.objects.filter(title__icontains = name)
+        return business
+
+class Post(models.Model):
+    body = models.TextField()
+    title = models.TextField(max_length=15)
+    poster= models.ForeignKey(User, on_delete=models.CASCADE, related_name='post')
+    post_neighbourhood = models.ForeignKey(Project,on_delete = models.CASCADE)
+    date = models.DateTimeField(auto_now_add = True,null = True)
+    
+    def save_post(self):
+        self.save()
+
+      
+    @classmethod
+    def get_by_id(cls, id):
+        post = Post.objects.get(id = id)
+        return post
+
+    
+    def get_absolute_url(self): 
+        return reverse('business')
+
+    def __str__(self):
+        return self.title 
+    
+    @classmethod
+    def get_post(cls, id):
+        posts = Post.objects.filter(post_neighbourhood__pk =id)
+        return posts
