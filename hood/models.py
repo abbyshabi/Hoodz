@@ -9,7 +9,19 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.db.models.signals import post_save
 
-
+class Neighbourhood(models.Model):
+   """
+   This is the class we will use to create images
+   """
+   n_image_url = models.ImageField(upload_to = "images/")
+   neigh_name = models.CharField(max_length = 30)
+   neigh_description = models.TextField(max_length=100)
+   neigh_admin = models.ForeignKey(User,related_name='neigh',on_delete=models.CASCADE)
+   neigh_date = models.DateTimeField(auto_now_add = True,null = True)
+   location = models.CharField(max_length = 30)
+   occupants = models.IntegerField(default = 0)
+   
+  
 
 
 class Project(models.Model):
@@ -47,7 +59,7 @@ class Project(models.Model):
 
 class Profile(models.Model):
     profile_image = models.ImageField(blank=True,upload_to='profiles/')
-    bio = models.TextField(null=True)
+    bio = models.TextField(blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     neighbour_hood = models.ForeignKey(Project,on_delete = models.CASCADE,null=True)
 
@@ -70,8 +82,6 @@ class Profile(models.Model):
     def update_user_profile(sender, instance, created, **kwargs):
         if created:
             Profile.objects.create(user=instance)
-        
-
 
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
@@ -106,7 +116,7 @@ class Business(models.Model):
 
     @classmethod
     def search_business(cls,name):
-        business = Business.objects.filter(title__icontains = name)
+        business = Business.objects.filter(name__icontains = name)
         return business
 
 class Post(models.Model):
@@ -126,9 +136,7 @@ class Post(models.Model):
         return post
 
     
-    def get_absolute_url(self): 
-        return reverse('business')
-
+    
     def __str__(self):
         return self.title 
     

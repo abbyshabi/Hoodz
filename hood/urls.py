@@ -15,6 +15,7 @@ urlpatterns=[
     url(r'^project/(\d+)', views.project, name = "project"),
     url(r'^post/(\d+)', views.post, name = "post"),
     url(r'^new_post',views.new_post ,name= 'new_post'),
+    url(r'^search/', views.search, name='search'),
 ]
 
 if settings.DEBUG:

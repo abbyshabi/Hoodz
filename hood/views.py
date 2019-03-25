@@ -144,17 +144,28 @@ def post(request,post_id):
     
     return render(request, 'post.html', {"post":post})
 
-@login_required(login_url='/accounts/login/')
-def new_post(request):
-    current_user = request.user
-    if request.method == 'POST':
-        form = PostForm(request.POST,request.FILES)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.poster = current_user
-            post.save()
-        return redirect('home')
-    else:
-        form = PostForm()
+# @login_required(login_url='/accounts/login/')
+# def new_post(request):
+#     current_user = request.user
+#     if request.method == 'POST':
+#         form = PostForm(request.POST,request.FILES)
+#         if form.is_valid():
+#             post = form.save(commit=False)
+#             post.poster = current_user
+#             post.save()
+#         return redirect('home')
+#     else:
+#         form = PostForm()
     
-   
+def search(request):
+    if 'search' in request.GET and request.GET['search']:
+        search_term = request.GET.get('search')
+        business = Business.search_business(search_term)
+        message = f'{search_term}'
+
+        return render(request, 'search.html',{'message':message, 'business':business})
+    else:
+        message = 'Enter term to search'
+        return render(request, 'search.html', {'message':message})
+        
+

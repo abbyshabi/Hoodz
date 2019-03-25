@@ -150,8 +150,8 @@ USE_TZ = True
 
 
 #login redirect
-LOGIN_REDIRECT_URL = "profile"
-REGISTER_REDIRECT_URL ="create"
+LOGIN_REDIRECT_URL = "home"
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
