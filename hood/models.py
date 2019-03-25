@@ -82,7 +82,7 @@ class Business(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='business')
     neighbourhood = models.ForeignKey(Project,on_delete = models.CASCADE)
 
-    def save_profile(self):
+    def save_business(self):
         self.save()
 
       
@@ -107,6 +107,9 @@ class Business(models.Model):
     def search_business(cls,name):
         business = Business.objects.filter(name__icontains = name)
         return business
+    def delete_business(self):
+       Business.objects.get(id = self.id).delete()
+
 
 class Post(models.Model):
     body = models.TextField()
@@ -124,7 +127,9 @@ class Post(models.Model):
         post = Post.objects.get(id = id)
         return post
 
-    
+    def delete_post(self):
+
+        self.delete()
     
     def __str__(self):
         return self.title 

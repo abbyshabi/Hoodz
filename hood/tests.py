@@ -101,9 +101,54 @@ class PostTestClass(TestCase):
         self.assertTrue(len(post) >= 0)
 
 
+    # def test_delete_method(self):
+    #     self.new_post.save_post()
+    #     post = Post.objects.all()
+    #     self.new_post.delete_post()
+    #     post = Post.objects.all()
+    #     self.assertTrue(len(post )< 0)
+
+
+
+class BusinessTestClass(TestCase):
+
+    def setUp(self):
+        self.new_user = User(username = "dee", email = "dammy@uu.com",password = "hello")
+        self.new_user.save()
+        self.new_project = Project(name= 'dee', admin = self.new_user)
+        self.new_project.save()
+        self.new_business = Business(name= 'dee', owner = self.new_user,neighbourhood = self.new_project)
+        self.new_business.save()
+
+
+    def test_instance(self):
+        self.assertTrue(isinstance(self.new_business, Business))
+
+    def tearDown(self):
+        """
+        This will clear the db after each test
+        """
+        Business.objects.all().delete()
+
+    def test_save_business(self):
+       
+        self.new_business.save_business()
+        self.assertTrue(len(Business.objects.all()) > 0)
+    
+    def test_init(self):
+        self.assertTrue(self.new_business.name =='dee')
+    
     def test_delete_method(self):
-        self.new_post.save_post()
-        post = Post.objects.all()
-        self.new_post.delete_post()
-        post = Post.objects.all()
-        self.assertTrue(len(post )== 0)
+        self.new_business.save_business()
+        business = Business.objects.all()
+        self.new_business.delete_business()
+        business = Business.objects.all()
+        self.assertTrue(len(business)==0)
+
+    def test_search_business(self):
+        """
+        This will test whether the search function works
+        """
+        name = Business.search_business("dee")
+        self.assertTrue(len(name) > 0)
+    
