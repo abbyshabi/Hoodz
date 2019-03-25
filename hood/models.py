@@ -9,18 +9,7 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.db.models.signals import post_save
 
-class Neighbourhood(models.Model):
-   """
-   This is the class we will use to create images
-   """
-   n_image_url = models.ImageField(upload_to = "images/")
-   neigh_name = models.CharField(max_length = 30)
-   neigh_description = models.TextField(max_length=100)
-   neigh_admin = models.ForeignKey(User,related_name='neigh',on_delete=models.CASCADE)
-   neigh_date = models.DateTimeField(auto_now_add = True,null = True)
-   location = models.CharField(max_length = 30)
-   occupants = models.IntegerField(default = 0)
-   
+
   
 
 
