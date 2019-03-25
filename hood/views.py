@@ -39,7 +39,7 @@ def profile(request):
     return render(request, 'profile.html',{"user":user, "current_user":request.user})
 
 @login_required(login_url='/accounts/login/')
-def update_profile(request):
+def create_profile(request):
     current_user = request.user
     if request.method == 'POST':
         form = ProfileForm(request.POST,request.FILES)
@@ -52,6 +52,23 @@ def update_profile(request):
         form = ProfileForm()
     
     return render(request,'update_profile.html',{"form":form})
+
+@login_required(login_url='/accounts/login/')
+def update_profile(request):
+    current_user = request.user
+    user = Profile.objects.get(user = current_user)
+    if request.method == 'POST':
+        form = ProfileForm(request.POST,request.FILES,instance = user)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            # profile.user = current_user
+            profile.save()
+        return redirect ('profile')
+    else:
+        form = ProfileForm(instance = user)
+    
+    return render(request,'update_profile.html',{"form":form})
+
 
 @login_required(login_url='/accounts/login/')
 def new_hood(request):

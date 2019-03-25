@@ -7,18 +7,9 @@ from django.dispatch import receiver
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 from django.conf import settings
+from django.db.models.signals import post_save
 
-class Neighbourhood(models.Model):
-   """
-   This is the class we will use to create images
-   """
-   n_image_url = models.ImageField(upload_to = "images/")
-   neigh_name = models.CharField(max_length = 30)
-   neigh_description = models.TextField(max_length=100)
-   neigh_admin = models.ForeignKey(User,related_name='neigh',on_delete=models.CASCADE)
-   neigh_date = models.DateTimeField(auto_now_add = True,null = True)
-   location = models.CharField(max_length = 30)
-   occupants = models.IntegerField(default = 0)
+
 
 
 class Project(models.Model):
@@ -56,9 +47,9 @@ class Project(models.Model):
 
 class Profile(models.Model):
     profile_image = models.ImageField(blank=True,upload_to='profiles/')
-    bio = models.TextField()
+    bio = models.TextField(null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    neighbour_hood = models.ForeignKey(Project,on_delete = models.CASCADE)
+    neighbour_hood = models.ForeignKey(Project,on_delete = models.CASCADE,null=True)
 
     def save_profile(self):
         self.save()
@@ -74,6 +65,17 @@ class Profile(models.Model):
 
     def get_absolute_url(self): 
         return reverse('user_profile')
+    
+    @receiver(post_save, sender=User)
+    def update_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+        
+
+
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
 
 class Business(models.Model):
     about = models.TextField(max_length=100)
@@ -135,33 +137,3 @@ class Post(models.Model):
         posts = Post.objects.filter(post_neighbourhood__pk =id)
         return posts
     
-class Locations(models.Model):
-   """
-   This is the class where we will create locations
-   """
-   name = models.CharField(max_length = 30)
-   loc_neighbourhood = models.ForeignKey(Neighbourhood , on_delete= models.CASCADE)
-
-   def save_location(self):
-       """
-       This is the function that we will use to save the instance of this class
-       """
-       self.save()
-
-   
-   def __str__(self):
-       return self.name
-
-class Category(models.Model):
-   """
-   This is the class where we will create categories
-   """
-   name = models.CharField(max_length = 30)
-   cat_neighbourhood = models.ForeignKey(Neighbourhood , on_delete= models.CASCADE)
-   
-   def save_category(self):
-       """
-       This is the function that we will use to save the instance of this class
-       """
-       self.save()
-
